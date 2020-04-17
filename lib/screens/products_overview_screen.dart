@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/product_item.dart';
 import '../models/product.dart';
 
 class ProductsOverviewScreen extends StatelessWidget {
@@ -42,7 +43,7 @@ class ProductsOverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Graamart'),
+        title: const Text('Grammart'),
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10.0),
@@ -52,7 +53,11 @@ class ProductsOverviewScreen extends StatelessWidget {
           crossAxisSpacing: 10.0,
           mainAxisSpacing: 10.0,
         ),
-        itemBuilder: (ctx, i) => Container(),
+        itemBuilder: (ctx, i) => ProductItem(
+          loadedProducts[i].id,
+          loadedProducts[i].title,
+          loadedProducts[i].imageUrl,
+        ),
         itemCount: loadedProducts.length,
       ),
     );
