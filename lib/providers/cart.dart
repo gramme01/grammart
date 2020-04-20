@@ -22,7 +22,19 @@ class Cart with ChangeNotifier {
   }
 
   int get itemCount {
-    return _items.length;
+    int count = 0;
+    _items.forEach((key, cartItem) {
+      count += cartItem.quantity;
+    });
+    return count;
+  }
+
+  double get totalAmount {
+    double total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
   }
 
   void addItem(String productId, double price, String title) {
