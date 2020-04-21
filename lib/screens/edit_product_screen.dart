@@ -103,6 +103,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 focusNode: _priceFocusNode,
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_descriptionFocusNode),
+                validator: (value) {
+                  if (value.isEmpty) return 'Please enter a Price';
+                  if (double.tryParse(value) == null)
+                    return 'Please enter a Valid Price';
+                  if (double.parse(value) <= 0)
+                    return 'Please enter a price greater than 0';
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     title: _editedProduct.title,
@@ -118,6 +126,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
+                validator: (value) {
+                  if (value.isEmpty) return 'Please eneter a description.';
+                  if (value.length < 10)
+                    return 'Description should be at least 10 characters';
+                  return null;
+                },
                 onSaved: (value) {
                   _editedProduct = Product(
                     title: _editedProduct.title,
