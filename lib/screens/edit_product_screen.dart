@@ -127,6 +127,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         setState(() {
           _isLoading = false;
         });
+        // print('then block called');
         Navigator.of(context).pop();
       });
     }

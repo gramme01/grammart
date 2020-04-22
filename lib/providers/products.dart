@@ -54,7 +54,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) {
-    const url = 'https://flutter-shop-app-22b2b.firebaseio.com/products.json';
+    const url = 'https://flutter-shop-app-22b2b.firebaseio.com/products';
     return http
         .post(
       url,
@@ -77,9 +77,8 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the List
       notifyListeners();
-    }).catchError((error) {
-      print(error);
-      throw error;
+    }, onError: (e) {
+      throw e;
     });
   }
 
