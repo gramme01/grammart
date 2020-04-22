@@ -62,4 +62,9 @@ class Products with ChangeNotifier {
     // _items.insert(0, newProduct); // at the start of the List
     notifyListeners();
   }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
 }
