@@ -41,6 +41,9 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  static const String productServer =
+      'https://flutter-shop-app-22b2b.firebaseio.com/products';
+
   List<Product> get items {
     return [..._items];
   }
@@ -54,7 +57,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://flutter-shop-app-22b2b.firebaseio.com/products.json';
+    const url = '$productServer.json';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -79,7 +82,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://flutter-shop-app-22b2b.firebaseio.com/products.json';
+    const url = '$productServer.json';
     try {
       final resp = await http.post(
         url,
@@ -114,9 +117,19 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url = '$productServer/$id.json';
+      await http.patch(
+        url,
+        body: json.encode({
+          'title': newProduct.title,
+          'description': newProduct.description,
+          'imageUrl': newProduct.imageUrl,
+          'price': newProduct.price,
+        }),
+      );
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
