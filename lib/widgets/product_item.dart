@@ -22,6 +22,7 @@ class ProductItem extends StatelessWidget {
       context,
       listen: false,
     );
+    final scaffold = Scaffold.of(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
@@ -43,8 +44,17 @@ class ProductItem extends StatelessWidget {
               icon: Icon(
                 product.isFavorite ? Icons.favorite : Icons.favorite_border,
               ),
-              onPressed: () {
-                product.toggleFavorite();
+              onPressed: () async {
+                try {
+                  await product.toggleFavorite();
+                } catch (e) {
+                  scaffold.showSnackBar(SnackBar(
+                    content: Text(
+                      e.toString(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                }
               },
               color: Theme.of(context).accentColor,
             ),
