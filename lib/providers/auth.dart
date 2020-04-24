@@ -10,9 +10,10 @@ class Auth with ChangeNotifier {
 
   static const api = 'AIzaSyD9-9hnifV-irZNfAWD5hzxe20rwXS6Big';
 
-  Future<void> signup(String email, String password) async {
-    const url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$api';
+  Future<void> _authenticate(
+      String email, String password, String urlSegment) async {
+    final url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment';
 
     final resp = await http.post(
       url,
@@ -24,5 +25,13 @@ class Auth with ChangeNotifier {
     );
 
     print(json.decode(resp.body));
+  }
+
+  Future<void> signup(String email, String password) async {
+    return _authenticate(email, password, 'signUp?key=$api');
+  }
+
+  Future<void> login(String email, String password) async {
+    return _authenticate(email, password, 'signInWithPassword?key=$api');
   }
 }
