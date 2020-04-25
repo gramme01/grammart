@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:grammart/providers/auth.dart';
 import 'package:http/http.dart' as http;
 
 import './product.dart';
@@ -42,6 +43,8 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  String authToken;
+
   static const String productServer =
       'https://flutter-shop-app-22b2b.firebaseio.com/products';
 
@@ -58,7 +61,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = '$productServer.json';
+    final url = '$productServer.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -152,3 +155,4 @@ class Products with ChangeNotifier {
     }
   }
 }
+//jhgfdkjfgfjkjdfgcxcvcxvcxvcxvfddsdfsfffgdsfdfddfg0
