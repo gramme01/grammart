@@ -29,11 +29,11 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavorite() async {
+  Future<void> toggleFavorite(String token) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
-    final url = '$productServer/$id.json';
+    final url = '$productServer/$id.json?auth=$token';
 
     final resp = await http.patch(
       url,
