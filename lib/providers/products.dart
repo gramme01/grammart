@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:grammart/providers/auth.dart';
 import 'package:http/http.dart' as http;
 
 import './product.dart';
@@ -155,4 +154,3 @@ class Products with ChangeNotifier {
     }
   }
 }
-//jhgfdkjfgfjkjdfgcxcvcxvcxvcxvfddsdfsfffgdsfdfddfg0
