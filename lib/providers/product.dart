@@ -21,25 +21,23 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  static const String productServer =
-      'https://flutter-shop-app-22b2b.firebaseio.com/products';
+  static const String favServer =
+      'https://flutter-shop-app-22b2b.firebaseio.com/userFavorites';
 
   void _setFavValue(bool newValue) {
     isFavorite = newValue;
     notifyListeners();
   }
 
-  Future<void> toggleFavorite(String token) async {
+  Future<void> toggleFavorite(String token, String userId) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
-    final url = '$productServer/$id.json?auth=$token';
+    final url = '$favServer/$userId/$id.json?auth=$token';
 
-    final resp = await http.patch(
+    final resp = await http.put(
       url,
-      body: json.encode({
-        'isFavorite': isFavorite,
-      }),
+      body: json.encode(isFavorite),
     );
     if (resp.statusCode >= 400) {
       _setFavValue(oldStatus);

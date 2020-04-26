@@ -43,6 +43,7 @@ class Products with ChangeNotifier {
   ];
 
   String authToken;
+  String userId;
 
   static const String productServer =
       'https://flutter-shop-app-22b2b.firebaseio.com/products';
@@ -67,6 +68,11 @@ class Products with ChangeNotifier {
 
       if (extractedData == null) return;
 
+      final favoriteResponse =
+          await http.get('${Product.favServer}/$userId.json?auth=$authToken');
+
+      final favoriteData = json.decode(favoriteResponse.body);
+
       final List<Product> loadedProduct = [];
       extractedData.forEach((prodId, prodData) {
         loadedProduct.add(
@@ -76,7 +82,8 @@ class Products with ChangeNotifier {
             description: prodData['description'],
             price: prodData['price'],
             imageUrl: prodData['imageUrl'],
-            isFavorite: prodData['isFavorite'],
+            isFavorite:
+                favoriteData == null ? false : favoriteData[prodId] ?? false,
           ),
         );
       });
@@ -97,7 +104,6 @@ class Products with ChangeNotifier {
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
-          'isFavorite': product.isFavorite,
         }),
       );
 

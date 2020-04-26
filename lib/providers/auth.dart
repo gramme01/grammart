@@ -23,6 +23,10 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  String get userId {
+    return _userId;
+  }
+
   static const api = 'AIzaSyD9-9hnifV-irZNfAWD5hzxe20rwXS6Big';
 
   Future<void> _authenticate(

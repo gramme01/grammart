@@ -43,7 +43,7 @@ class ProductItem extends StatelessWidget {
               ),
               onPressed: () async {
                 try {
-                  await product.toggleFavorite(authData.token);
+                  await product.toggleFavorite(authData.token, authData.userId);
                 } catch (e) {
                   scaffold.showSnackBar(SnackBar(
                     content: Text(
