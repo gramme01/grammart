@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grammart/helpers/custom_route.dart';
 import 'package:provider/provider.dart';
 
 import './screens/cart_screen.dart';
@@ -48,10 +49,13 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Grammart',
               theme: ThemeData(
-                primarySwatch: Colors.purple,
-                accentColor: Colors.deepOrange,
-                fontFamily: 'Lato',
-              ),
+                  primarySwatch: Colors.purple,
+                  accentColor: Colors.deepOrange,
+                  fontFamily: 'Lato',
+                  pageTransitionsTheme: PageTransitionsTheme(builders: {
+                    TargetPlatform.android: CustomPageTransitionBuilder(),
+                    TargetPlatform.iOS: CustomPageTransitionBuilder(),
+                  })),
               home: auth.isAuth
                   ? ProductsOverviewScreen()
                   : FutureBuilder(
